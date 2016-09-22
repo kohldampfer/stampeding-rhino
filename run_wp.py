@@ -86,6 +86,7 @@ def unzip_file(zip_file):
 
 # parse command line arguments
 parse_command_line_arguments(sys.argv)
+print("Target dir is '{0}'".format(TARGET_DIR))
 
 # download plugins and extract files
 urls = parse_rss()
