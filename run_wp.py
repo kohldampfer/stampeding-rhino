@@ -61,6 +61,7 @@ def get_zip_link(link):
 	return return_links
 
 def download_zip(zip_url):
+  global TARGET_DIR
 	last_slash = zip_url.rfind('/')
 	# get filename of zip which needs to be downloaded
 	zip_file=zip_url[last_slash+1:len(zip_url)]
@@ -71,7 +72,7 @@ def download_zip(zip_url):
 		os.remove(zip_file)
 
 	# retrieve zip
-	print(" - Download file {0}".format(zip_file))
+	print(" - Download file to  {0}/{1}".format(TARGET_DIR, zip_file))
 	urllib.request.urlretrieve(zip_url, "{0}/{1}".format(TARGET_DIR, zip_file))
 
 	return "{0}/{1}".format(TARGET_DIR, zip_file)
