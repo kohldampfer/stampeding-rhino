@@ -73,9 +73,14 @@ def download_zip(zip_url):
 
   # retrieve zip
   print(" - Download file to  {0}/{1}".format(TARGET_DIR, zip_file))
-  urllib.request.urlretrieve(zip_url, "{0}/{1}".format(TARGET_DIR, zip_file))
+  try:
+    urllib.request.urlretrieve(zip_url, "{0}/{1}".format(TARGET_DIR, zip_file))
+    return "{0}/{1}".format(TARGET_DIR, zip_file)
+  except urllib.error.HTTPError as e:
+    print("An error occurred during download.")
+    print(e)
 
-  return "{0}/{1}".format(TARGET_DIR, zip_file)
+  return ""
 
 def unzip_file(zip_file):
   global TARGET_DIR
@@ -95,10 +100,11 @@ print("Target dir is '{0}'".format(TARGET_DIR))
 # download plugins and extract files
 urls = parse_rss()
 for z in urls:
-	zip_urls = get_zip_link(z)
-	for u in zip_urls:
-		zip_file = download_zip(u)
-		unzip_file(zip_file)
-		os.remove(zip_file)
+  zip_urls = get_zip_link(z)
+  for u in zip_urls:
+    zip_file = download_zip(u)
+    if zip_file:
+      unzip_file(zip_file)
+      os.remove(zip_file)
 
 exit(0)
