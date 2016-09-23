@@ -62,20 +62,20 @@ def get_zip_link(link):
 
 def download_zip(zip_url):
   global TARGET_DIR
-	last_slash = zip_url.rfind('/')
-	# get filename of zip which needs to be downloaded
-	zip_file=zip_url[last_slash+1:len(zip_url)]
+  last_slash = zip_url.rfind('/')
+  # get filename of zip which needs to be downloaded
+  zip_file=zip_url[last_slash+1:len(zip_url)]
+  
+  # remove file if it exists
+  if os.path.isfile(zip_file):
+    print(" - Deleting file {0}".format(zip_file))
+    os.remove(zip_file)
 
-	# remove file if it exists
-	if os.path.isfile(zip_file):
-		print(" - Deleting file {0}".format(zip_file))
-		os.remove(zip_file)
+  # retrieve zip
+  print(" - Download file to  {0}/{1}".format(TARGET_DIR, zip_file))
+  urllib.request.urlretrieve(zip_url, "{0}/{1}".format(TARGET_DIR, zip_file))
 
-	# retrieve zip
-	print(" - Download file to  {0}/{1}".format(TARGET_DIR, zip_file))
-	urllib.request.urlretrieve(zip_url, "{0}/{1}".format(TARGET_DIR, zip_file))
-
-	return "{0}/{1}".format(TARGET_DIR, zip_file)
+  return "{0}/{1}".format(TARGET_DIR, zip_file)
 
 def unzip_file(zip_file):
 	dir_of_zip = zip_file[0:len(zip_file)-4]
