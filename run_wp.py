@@ -16,9 +16,10 @@ CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 TARGET_DIR = "{0}/downloads".format(CURRENT_DIR)
 
 def parse_command_line_arguments(arguments):
+  global TARGET_DIR
   print("Parsing command line arguments ...")
   try:
-    opts, args = getopt.getopt(arguments, "t:", ["targetdir="])
+    opts, args = getopt.getopt(arguments[1:], "t:", ["targetdir="])
   except getopt.GetoptError:
     print("Use one of the following commands: ")
     print(arguments[0] + " -t <targetdir>")
@@ -26,11 +27,8 @@ def parse_command_line_arguments(arguments):
     sys.exit(-1)
   
   for opt, arg in opts:
-    print(opt)
     if opt in ("-t", "--targetdir"):
-      print("Found targetdir parameter.")
       TARGET_DIR = arg
-      print("Target dir is '{0}'".format(TARGET_DIR))
 
 def parse_rss():
 	print("Start parsing {0}".format(RSS_URL))
