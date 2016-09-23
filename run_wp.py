@@ -78,14 +78,15 @@ def download_zip(zip_url):
   return "{0}/{1}".format(TARGET_DIR, zip_file)
 
 def unzip_file(zip_file):
-	dir_of_zip = zip_file[0:len(zip_file)-4]
+  global TARGET_DIR
+  dir_of_zip = zip_file[0:len(zip_file)-4]
 
-	if os.path.isdir(dir_of_zip):
-		shutil.rmtree(dir_of_zip)
+  if os.path.isdir(dir_of_zip):
+    shutil.rmtree(dir_of_zip)
 
-	zip_ref = zipfile.ZipFile(zip_file, 'r')
-	zip_ref.extractall(".")
-	zip_ref.close()
+  zip_ref = zipfile.ZipFile(zip_file, 'r')
+  zip_ref.extractall(TARGET_DIR)
+  zip_ref.close()
 
 # parse command line arguments
 parse_command_line_arguments(sys.argv)
