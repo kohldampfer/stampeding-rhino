@@ -26,6 +26,7 @@ def parse_command_line_arguments(arguments):
     sys.exit(-1)
   
   for opt, arg in opts:
+    print(opt)
     if opt in ("-t", "--targetdir"):
       print("Found targetdir parameter.")
       TARGET_DIR = arg
