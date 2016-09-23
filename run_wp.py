@@ -40,25 +40,30 @@ def parse_rss():
 	return links
 
 def get_zip_link(link):
-	# use requests to get the contents
-	r = requests.get(link)
+  # use requests to get the contents
+  try:
+    r = requests.get(link)
+  except requests.exceptions.TooManyRedirects as e:
+    print("An error occurred.")
+    print(e)
+    return []
+  
+  # get the text of the contents
+  html_content = r.text
 
-	# get the text of the contents
-	html_content = r.text
+  # find all links in the url
+  soup = bs4.BeautifulSoup(html_content, "html.parser")
+  links = soup.findAll('a')
+  return_links = []
+  for l in links:
+    if l is not None:
+      href = l.get('href')
+      if href is not None and href.endswith(".zip"):
+      print(" - Found zip link: {0}".format(href))
+        return_links.append(href)
 
-	# find all links in the url
-	soup = bs4.BeautifulSoup(html_content, "html.parser")
-	links = soup.findAll('a')
-	return_links = []
-	for l in links:
-		if l is not None:
-			href = l.get('href')
-			if href is not None and href.endswith(".zip"):
-				print(" - Found zip link: {0}".format(href))
-				return_links.append(href)
-
-	# return all zip links
-	return return_links
+  # return all zip links
+  return return_links
 
 def download_zip(zip_url):
   global TARGET_DIR
