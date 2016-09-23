@@ -59,7 +59,7 @@ def get_zip_link(link):
     if l is not None:
       href = l.get('href')
       if href is not None and href.endswith(".zip"):
-      print(" - Found zip link: {0}".format(href))
+        print(" - Found zip link: {0}".format(href))
         return_links.append(href)
 
   # return all zip links
